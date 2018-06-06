@@ -19,9 +19,12 @@ using std::deque;
 class Traffic_Queue
 {
 private:
-    deque<class User> users_in_queue;       // queue of users in lane
-    string heading;                         // direction of travel permitted by lane
-    string mode;                            // mode of transportation (e.g. vehicle, pedestrian)
+    deque<class User> users_in_queue;         // queue of users in lane
+    string origin                             // origin of users
+    string heading;                           // direction of travel permitted by lane
+    string mode;                              // mode of transportation (e.g. vehicle, pedestrian)
+    string color;                             // current color of light
+    double time_turned;                       // time light turned that color
 
 public:
     Traffic_Queue();
@@ -39,6 +42,19 @@ public:
     void removeUntilUser(class User&);
     class User* getFirstUserInLine();
     double calcAverageWaitTime (double);
+
+
+public:
+    Traffic_Light();
+    Traffic_Light(string);
+    void setHeading(string);
+    string getHeading();
+    void setColor (string);
+    string getColor();
+    void setTimeTurned(double);
+    double getTimeTurned();
+    void updateLight (string, double);
+    void changeLight(double);
 };
 
 #endif /* Traffic_Queue_hpp */

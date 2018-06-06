@@ -18,6 +18,8 @@ Traffic_Queue::Traffic_Queue()
 {
     heading = "unknown";
     mode = "vehicle";
+    color ="red";
+    time_turned = 0;
 }
 
 
@@ -28,17 +30,22 @@ Traffic_Queue::Traffic_Queue()
 Traffic_Queue::Traffic_Queue(string h)
 {
     heading = h;
+    mode = "vehicle";
+    color ="red";
+    time_turned = 0;
 }
 
 
 /**********************************************************************
  ** Constructor
- ** Description: sets heading and mode. 
+ ** Description: sets heading and mode.
  **********************************************************************/
 Traffic_Queue::Traffic_Queue(string h, string m){
 
     heading = h;
     mode = m;
+    color ="red";
+    time_turned = 0;
 }
 
 
@@ -72,6 +79,28 @@ string Traffic_Queue::getMode()
     return mode;
 }
 
+void Traffic_Queue::setColor (string c)
+{
+    color = c;
+}
+
+
+string Traffic_Queue::getColor()
+{
+    return color;
+}
+
+
+void Traffic_Queue::setTimeTurned(double t)
+{
+    time_turned = t;
+}
+
+
+double Traffic_Queue::getTimeTurned()
+{
+    return time_turned;
+}
 
 /**********************************************************************
  ** addUser
@@ -80,7 +109,7 @@ string Traffic_Queue::getMode()
 void Traffic_Queue::addUser(class User &u)
 {
     users_in_queue.push_back(u);
-    
+
 }
 
 
@@ -120,3 +149,43 @@ double Traffic_Queue::calcAverageWaitTime(double current_time)
         total_wait_time += u.calcTimeWaited(current_time);
     return total_wait_time / users_in_queue.size();
 }
+
+/**********************************************************************
+ ** updateLight
+ ** Description: updates the color and time turned of a light
+ **********************************************************************/
+void Traffic_Queue::updateLight(string c, double t)
+{
+    color = c;
+    time_turned = t;
+}
+
+
+/**********************************************************************
+ ** changeLight
+ ** Description: changes the color of a light to the next correct color
+ **********************************************************************/
+void Traffic_Light::changeLight(double t)
+{
+    // light is red
+    if (color.compare("red") == 0)
+    {
+        color = "green";
+        time_turned = t;
+    }
+
+    //light is yellow
+    else if (color.compare("yellow") == 0)
+    {
+        color = "red";
+        time_turned = t;
+    }
+
+    // light is green
+    else
+    {
+        color = "yellow";
+        time_turned = t;
+    }
+}
+
